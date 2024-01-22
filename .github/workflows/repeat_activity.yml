@@ -24,3 +24,7 @@ jobs:
         git add .
         git commit -m "Add new code - $(date)"
         git push
+
+    - name: Create New Issue
+      run: |
+        gh issue create --title "New Activity" --body "A new activity has been added."
