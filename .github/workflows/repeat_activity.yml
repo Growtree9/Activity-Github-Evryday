@@ -12,16 +12,14 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Create Repeat Content
+    - name: Create New Code File
       run: |
-        echo "Repeat Activity - $(date)" >> repeat_content.txt
-        # یا می‌توانید یک فایل جدید ایجاد کرده و کد خود را در آنجا قرار دهید
-        # echo "Your Code Here" >> repeat_code.js
+        echo "Your Code Here - $(date)" >> new_code_$(date "+%Y%m%d%H%M%S").js
 
     - name: Commit and Push Changes
       run: |
         git config --global user.email "ramincsy2@gmail.com"
         git config --global user.name "ramincsy"
         git add .
-        git commit -m "Add repeat activity - $(date)"
+        git commit -m "Add new code - $(date)"
         git push
