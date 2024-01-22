@@ -2,7 +2,7 @@ name: Repeat Activity
 
 on:
   schedule:
-    - cron: '0 */2 * * *' # هر 4 ساعت یک بار
+    - cron: '0 */4 * * *' # هر 4 ساعت یک بار
 
 jobs:
   repeat_activity:
@@ -10,8 +10,9 @@ jobs:
 
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v2
-
+      run: |
+        git clone https://github.com/ramincsy/Activity-Github-Evryday .
+        
     - name: Create New Code File
       run: |
         echo "Your Code Here - $(date)" >> new_code_$(date "+%Y%m%d%H%M%S").js
