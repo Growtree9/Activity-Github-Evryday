@@ -1,0 +1,27 @@
+name: Repeat Activity
+
+on:
+  schedule:
+    - cron: '0 */4 * * *' # هر 4 ساعت یک بار
+
+jobs:
+  repeat_activity:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Create Repeat Content
+      run: |
+        echo "Repeat Activity - $(date)" >> repeat_content.txt
+        # یا می‌توانید یک فایل جدید ایجاد کرده و کد خود را در آنجا قرار دهید
+        # echo "Your Code Here" >> repeat_code.js
+
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.email "your.email@example.com"
+        git config --global user.name "Your Name"
+        git add .
+        git commit -m "Add repeat activity - $(date)"
+        git push
