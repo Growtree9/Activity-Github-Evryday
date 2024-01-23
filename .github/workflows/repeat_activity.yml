@@ -27,5 +27,5 @@ jobs:
 
     - name: Create New Issue
       run: |
-        gh auth login --with-token "${{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}}"
+        gh auth login --with-token "${{secrets.GITHUB_TOKEN}}"
         gh issue create --title "New Activity" --body "A new activity has been added."
