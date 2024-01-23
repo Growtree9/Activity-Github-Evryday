@@ -23,7 +23,7 @@ jobs:
       run: |
         git add .
         git commit -m "Add new code - $(date)"
-        git push https://ramincsy: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@github.com/ramincsy/Activity-Github-Evryday main
+        git push origin main
 
     - name: Create New Issue
       run: |
