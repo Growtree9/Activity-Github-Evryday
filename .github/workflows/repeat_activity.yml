@@ -1,63 +1,34 @@
-name: Pull Request Example
+name: Daily Activity
 
-on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - typescript-project/**
-  workflow_dispatch:
+on: 
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
-  pull-request:
+
+  update-readme:
+
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: typescript-project
-
     steps:
-      - uses: actions/checkout@v2
-
-      # Setup Nodejs
-      - name: Setup Node.js 16
-        uses: actions/setup-node@v2
-        with:
-          node-version: "16.x"
-          cache: 'npm'
-          cache-dependency-path: typescript-project/yarn.lock
-
-      # Install Yarn
-      - name: Install Yarn
-        run: npm install --global yarn
-
-      # Install libraries
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      # Run linting
-      - name: Run linting
-        run: yarn lint
-
-      # Compile the code
-      - name: Build project
-        run: yarn build
-
-      # Run tests
-      - name: Run tests
-        run: yarn test
-
-      # Configure git
-      - name: Configure Git
-        run: |
-          git config user.email "ramincsy2@gmail.com"
-          git config user.name "ramincsy"
-
-      # Commit and push changes
-      - name: Commit and Push Changes
-        run: |
-          git add .
-          git commit -m "Run linting, build, and tests"
-          git push origin ${{ github.head_ref }}
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    - uses: actions/checkout@v2
+    
+    - name: Update README
+      run: |
+        date >> README.md
+        
+    - name: Setup Git
+      run: |
+        git config user.name "My Bot"
+        git config user.email "mybot@example.com"
+        
+    - name: Commit changes
+      run: |
+        git add .
+        git commit -m "Daily update"
+        
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GH_TOKEN }}
+        branch: main
