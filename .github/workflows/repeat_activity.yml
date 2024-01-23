@@ -19,7 +19,7 @@ jobs:
     - name: Setup GitHub Credentials  
       uses: github/gh-action@v4
       with:
-        github_token: ${{ secrets.PERSONAL_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create File
       run: |
