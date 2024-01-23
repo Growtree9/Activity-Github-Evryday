@@ -12,19 +12,21 @@ jobs:
     - name: Checkout Repository
       run: |
         git clone https://github.com/ramincsy/Activity-Github-Evryday .
-        
+        git config --global user.email "ramincsy2@gmail.com"
+        git config --global user.name "ramincsy"
+        git config --global credential.helper store
+
     - name: Create New Code File
       run: |
         echo "Your Code Here - $(date)" >> new_code_$(date "+%Y%m%d%H%M%S").js
 
     - name: Commit and Push Changes
       run: |
-        git config --global user.email "ramincsy2@gmail.com"
-        git config --global user.name "ramincsy"
         git add .
         git commit -m "Add new code - $(date)"
         git push
 
     - name: Create New Issue
       run: |
+        gh auth login --with-token <<<"${{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}}"
         gh issue create --title "New Activity" --body "A new activity has been added."
