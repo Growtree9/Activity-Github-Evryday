@@ -46,3 +46,18 @@ jobs:
       # Run tests
       - name: Run tests
         run: yarn test
+
+      # Configure git
+      - name: Configure Git
+        run: |
+          git config user.email "ramincsy2@gmail.com"
+          git config user.name "ramincsy"
+
+      # Commit and push changes
+      - name: Commit and Push Changes
+        run: |
+          git add .
+          git commit -m "Run linting, build, and tests"
+          git push origin ${{ github.head_ref }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
