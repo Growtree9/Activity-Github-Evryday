@@ -1,33 +1,12 @@
-name: Repeat Activity
+name: Hello World
 
 on:
-  schedule:
-    - cron: '0 */4 * * *' # هر 4 ساعت یک بار
+  workflow_dispatch:
 
 jobs:
-  repeat_activity:
+  print-hello-world:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      run: |
-        git clone https://github.com/ramincsy/Activity-Github-Evryday .
-        git config --global user.email "ramincsy2@gmail.com"
-        git config --global user.name "ramincsy"
-
-    - name: Create New Code File
-      run: |
-        echo "Your Code Here - $(date)" >> new_code_$(date "+%Y%m%d%H%M%S").js
-
-    - name: Commit and Push Changes
-      run: |
-        git add .
-        git commit -m "Add new code - $(date)"
-        git push origin main
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
-    - name: Create New Issue
-      run: |
-        gh auth login --with-token "${{ secrets.GH_TOKEN }}"
-        gh issue create --title "New Activity" --body "A new activity has been added."
+      - name: Say hello
+        run: echo "Hello World"
