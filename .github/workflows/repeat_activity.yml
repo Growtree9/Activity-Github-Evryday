@@ -25,7 +25,7 @@ jobs:
         git commit -m "Add new code - $(date)"
         git push origin main
       env:
-        GH_TOKEN: ${{activity-secret2023}}
+        GH_TOKEN: ${{ACTIVITY_SEC}}
 
 
     - name: Create New Issue
