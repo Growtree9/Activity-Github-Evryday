@@ -1,33 +1,39 @@
-name: Repeat Activity
+name: Repeat Activity 
 
 on:
   schedule:
-    - cron: '0 */4 * * *' # هر 4 ساعت یک بار
+    - cron: '0 */4 * * *' 
 
 jobs:
+
   repeat_activity:
+
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      run: |
-        git clone https://github.com/ramincsy/Activity-Github-Evryday .
+
+    - name: Checkout Repository  
+      if: ${{ github.run_number == 1 }}
+      uses: actions/checkout@v2
+      
+    - name: Setup GitHub Credentials
+      uses: github/gh-action@v4
+      with:
+        github_token: ${{secrets.ACTIVITY_SEC}}
 
     - name: Create New Code File
       run: |
         echo "Your Code Here - $(date)" >> new_code_$(date "+%Y%m%d%H%M%S").js
 
     - name: Commit and Push Changes
+      continue-on-error: true
       run: |
-        git config --global user.email "ramincsy2@gmail.com"
-        git config --global user.name "ramincsy"
+        git config user.name github-actions
+        git config user.email github-actions@github.com
         git add .
         git commit -m "Add new code - $(date)"
-        git push origin main
-      env:
-        GH_TOKEN: ${{ secrets.ACTIVITY_SEC }}
-
+        git push
 
     - name: Create New Issue
-      run: |
-        gh issue create --title "New Activity" --body "A new activity has been added."
+      run: |  
+        gh issue create --title "New Activity $(date)"
